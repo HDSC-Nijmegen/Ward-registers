@@ -1,4 +1,5 @@
-#csv - ttl conversion script.
+#csv - ttl conversion script
+
 The R-file transforms the Surinamese ward registers into RDF according to the Persons in Context (PiCo) schema. 
 
 #source data
