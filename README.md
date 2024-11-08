@@ -10,9 +10,9 @@ The RDF graph is available at: https://druid.datalegend.net/RJM/Paramaribo-Ward-
 Sang-Ajang, J.; Altink, N.; Dikland, P.; Jonkers, C.; Kariomengolo; Valies, C.; Van Oort, T. (2024). Paramaribo Ward Registers 1828-1847. IISH Data Collection. 
 
 # Data model
-![alt text](Schema/Schema.png)
+![Schema](Schema/Schema.png)
 
 # Example
-![alt text](Example/NL-HaNA_1.05.08.01_652_0233.jpg)
+![Folio](Example/NL-HaNA_1.05.08.01_652_0233.jpg)
 
-![alt text](Example/WR.ttl)
+![example ttl file](Example/WR.ttl)
