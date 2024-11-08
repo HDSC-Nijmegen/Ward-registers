@@ -1,0 +1,336 @@
+#namespaces
+@prefix enslaved:        <http://www.enslaved.org/1.0> .
+@prefix hdsc:            <https://www.ru.nl/hdsc/example/> .
+@prefix natarch:		 <https://www.nationaalarchief.nl/onderzoeken/archief/1.05.08.01/invnr/652/file/> .
+@prefix pico:			 <https://cbg.nl/> .
+@prefix prov:			 <http://www.w3.org/ns/prov#> .
+@prefix schema:			 <https://www.schema.org/> .
+@prefix xsd:			 <http://www.w3.org/2000/10/XMLSchema#> .
+
+
+#source
+hdsc:1838a222
+  a                        schema:ArchiveComponent ;
+  schema:name              "Wijkregister Paramaribo, 1.05.08.01, inv. 652, 1838a, Watermolenstraat 195" ;
+  schema:locationCreated   "Paramaribo" ;
+  schema:dateCreated	     "1838"^^xsd:gYear ;
+  schema:image             natarch:NL-HaNA_1.05.08.01_652_0233 ;
+  schema:holdingArchive    <https://www.nationaalarchief.nl/> .
+
+
+#address
+hdsc:1838a222_address
+  a                        schema:PostalAddress ;
+  schema:streetAddress     "Watermolenstraat 195" ;
+  hdsc:wijk                "A" ;
+  hdsc:streetName          "Watermolenstraat" ;
+  hdsc:houseNumber         "195" ;
+  hdsc:locationRemark      "In dit voorbeeld geen" ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+
+
+#explicit persons
+hdsc:54848
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "Rachel Baëza, weduwe D J de Vries" ;
+  schema:familyName        "Baëza" ;
+  schema:givenName         "Rachel" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "Rachel Baëza, weduwe D J de Vries" ;
+    pnv:baseSurname        "Baëza" ;
+    pnv:givenName          "Rachel" ; ] ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  pico:hasAge              "40"^^xsd:decimal ;
+  pico:hasReligion         "Nederlands-Portugees Israëlitisch" ;
+  pico:hasRole             picot:490 ;  #bewoner
+  hdsc:hasRacialCategory   hdsc:blank ;
+  schema:spouse            nha:54848p ;
+  hdsc:isEnslaverOf        hdsc:54848e1, hdsc:54848e2, hdsc:54848e3, hdsc:54848e4, hdsc:54848e5, hdsc:54848e6, hdsc:54848e7, hdsc:54848e8, hdsc:54848e9 .
+
+hdsc:54849
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "Jacob Gradis de Vries" ;
+  schema:familyName        "Gradis de Vries" ;
+  schema:givenName         "Jacob" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "Jacob Gradis de Vries" ;
+    pnv:baseSurname        "Gradis de Vries" ;
+    pnv:givenName          "Jacob" ; ] ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  pico:hasAge              "9"^^xsd:decimal ;
+  pico:hasReligion         "Hoog-Duitsch Joodse Gemeenschap" ;
+  pico:hasRole             picot:490 ;  #bewoner
+  hdsc:hasRacialCategory   hdsc:blank .
+
+hdsc:54850
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "Blanche Gradis de Vries" ;
+  schema:familyName        "Gradis de Vries" ;
+  schema:givenName         "Blanche" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "Blanche Gradis de Vries" ;
+    pnv:baseSurname        "Gradis de Vries" ;
+    pnv:givenName          "Blanche" ; ] ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  pico:hasAge              "7"^^xsd:decimal ;
+  pico:hasReligion         "Hoog-Duitsch Joodse Gemeenschap" ;
+  pico:hasRole             picot:490 ;  #bewoner
+  hdsc:hasRacialCategory   hdsc:blank .
+
+hdsc:54851
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "Abigael Gradis de Vries" ;
+  schema:familyName        "Gradis de Vries" ;
+  schema:givenName         "Abigael" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "Abigael Gradis de Vries" ;
+    pnv:baseSurname        "Gradis de Vries" ;
+    pnv:givenName          "Abigael" ; ] ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  pico:hasAge              "5"^^xsd:decimal ;
+  pico:hasReligion         "Hoog-Duitsch Joodse Gemeenschap"
+  pico:hasRole             picot:490 ;  #bewoner
+  hdsc:hasRacialCategory   hdsc:blank .
+
+hdsc:54852
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "Judith, weduwe Abraham Robles" ;
+  schema:givenName         "Judith" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "Judith, weduwe Abraham Robles" ;
+    pnv:baseSurname        "Judith" ; ] ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  pico:hasAge              "54"^^xsd:decimal ;
+  pico:hasReligion         "Nederlands-Portugees Joodse Gemeenschap"
+  pico:hasRole             picot:490 ;  #bewoner
+  hdsc:hasRacialCategory   hdsc:blank ;
+  schema:spouse            nha:54850p ;
+  hdsc:isEnslaverOf        hdsc:54850e1, hdsc:54850e2, hdsc:54850e3, hdsc:54850e4 .
+
+
+#implicit spouses
+hdsc:54848p
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "D J de Vries" ;
+  schema:familyName        "De Vries" ;
+  schema:givenName         "D J" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "D J de Vries" ;
+    pnv:baseSurname        "Vries" ;
+    pnv:surnamePrefix      "de" ;
+    pnv:initials           "D J" ; ] ;
+  schema:gender            schema:Male ;
+  pico:deceased            TRUE ;
+  schema:spouse            nha:54848 .
+
+hdsc:54850p
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:name              "Abraham Robles" ;
+  schema:familyName        "Robles" ;
+  schema:givenName         "Abraham" ;
+  schema:additionalName    [ 
+    a                      pnv:PersonName ;
+    pnv:literalName        "Abraham Robles" ;
+    pnv:baseSurname        "Robles" ;
+    pnv:givenName          "Abraham" ; ] ;
+  schema:gender            schema:Male ;
+  pico:deceased            "T"^^xsd:boolean ;
+  schema:spouse            nha:54850 .
+
+
+#enslaved persons
+hdsc:54848e1
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e2
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e3
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e4
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e5
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e6
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q427 ;  #child
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e7
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q427 ;  #child
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e8
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q427 ;  #child
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54848e9
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:neger
+  hdsc:isEnslavedBy        hdsc:54848 .
+
+hdsc:54852e1
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:neger
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+hdsc:54852e2
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:neger
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+hdsc:54852e3
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:neger
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+hdsc:54852e4
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q427 ;  #child
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:neger
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+hdsc:54853e1
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q425 ;  #adult
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+hdsc:54853e2
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Male ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q427 ;  #child
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+hdsc:54853e3
+  a                        pico:PersonObservation ;
+  prov:hadPrimarySource    hdsc:1838a222 ;
+  schema:gender            schema:Female ;
+  schema:address           hdsc:1838a222 ;
+  hdsc:hasAgeCategory      enslaved:Q427 ;  #child
+  pico:hasRole             picot:490 ;      #bewoner
+  pico:hasRole             enslaved:Q109 ;  #enslaved
+  hdsc:hasRacialCategory   hdsc:kleurling
+  hdsc:isEnslavedBy        hdsc:54852 .
+
+

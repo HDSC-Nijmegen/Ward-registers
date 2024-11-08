@@ -12,14 +12,15 @@ WR$Partnernaam <- trimws(ifelse(is.na(WR$Fn_Dec_Spouse), WR$Achternaam2, paste(W
 WR$Archieftoegang[is.na(WR$Archieftoegang)] <- ""
 WR$Straatnaam[is.na(WR$Straatnaam)] <- ""
 WR$Huisnummer[is.na(WR$Huisnummer)] <- ""
+WR$Leeftijd <- as.numeric(gsub(",", ".", WR$Leeftijd))
 WR$'Aantal Slaafgemaakten'[is.na(WR$'Aantal Slaafgemaakten')] <- 0
 WR$'Aantal Slaafgemaakten' <- ifelse(is.na(WR$Enslaved), WR$'Aantal Slaafgemaakten', WR$'Aantal Slaafgemaakten'-1)
 WR$'Aantal Slaafgemaakten'[WR$Id==124812] <- 2
-WR$imp_enslaved <- ifelse(WR$'Aantal Slaafgemaakten'>0, paste0("hdsc:WR-Suriname/observation/", WR$Id, "e", 1), NA)
+WR$imp_enslaved <- ifelse(WR$'Aantal Slaafgemaakten'>0, paste0("hdsc:WR-Suriname\\/observation\\/", WR$Id, "e", 1), NA)
 x <- 1
 repeat{
   x <- x + 1
-  WR$imp_enslaved <- ifelse(WR$'Aantal Slaafgemaakten'>=x, paste(WR$imp_enslaved, paste0("hdsc:WR-Suriname/observation/", WR$Id, "e", x),sep=","), WR$imp_enslaved)
+  WR$imp_enslaved <- ifelse(WR$'Aantal Slaafgemaakten'>=x, paste(WR$imp_enslaved, paste0("hdsc:WR-Suriname\\/observation\\/", WR$Id, "e", x),sep=","), WR$imp_enslaved)
   if(x==max(WR$'Aantal Slaafgemaakten',na.rm=T)){break}
 }
 rm(x)
@@ -52,7 +53,7 @@ prefix <- "@prefix ed:    <http://lod.enslaved.org/entity/> .
 "
 
 #source
-source_ttl <- paste0("hdsc:WR-Suriname/source/", card$'Kaart Id', " 
+source_ttl <- paste0("hdsc:WR-Suriname\\/source\\/", card$'Kaart Id', " 
     a sdo:ArchiveComponent ; 
     sdo:name \"", card$Register, " ", card$Archieftoegang, ", ", card$Wijk, ", ", card$Jaar, ", ", card$Straatnaam, " ", card$Huisnummer, "\" ; 
     sdo:locationCreated \"", "Paramaribo", "\" ; 
@@ -66,23 +67,23 @@ source_ttl <- gsub("    sdo:image NA ;
 #address
 card$Adress_Remarks[card$Adress_Remarks==""] <- NA
 card1 <- card[which(is.na(card$Adress_Remarks)),]
-  address_ttl1 <- paste0("hdsc:WR-Suriname/location/", card1$'Kaart Id', "_address 
+  address_ttl1 <- paste0("hdsc:WR-Suriname\\/location\\/", card1$'Kaart Id', "_address 
     a sdo:PostalAddress ; 
     sdo:streetAddress \"", card1$Straatnaam, " ", card1$Huisnummer, "\" ; 
     hdsc:wijk \"", card1$Wijk, "\" ; 
     hdsc:streetname \"", card1$Straatnaam, "\" ; 
     hdsc:houseNumber \"", card1$Huisnummer, "\" ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", card1$'Kaart Id', " .
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", card1$'Kaart Id', " .
 ")
 card2 <- card[which(!is.na(card$Adress_Remarks)),]
-  address_ttl2 <- paste0("hdsc:WR-Suriname/location/", card2$'Kaart Id', "_address  
+  address_ttl2 <- paste0("hdsc:WR-Suriname\\/location\\/", card2$'Kaart Id', "_address  
     a sdo:PostalAddress ; 
     sdo:streetAddress \"", card2$Straatnaam, " ", card2$Huisnummer, "\" ; 
     hdsc:wijk \"", card2$Wijk, "\" ; 
     hdsc:streetname \"", card2$Straatnaam, "\" ; 
     hdsc:houseNumber \"", card2$Huisnummer, "\" ; 
     sdo:description \"", card2$Adress_Remarks, "\" ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", card2$'Kaart Id', " .
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", card2$'Kaart Id', " .
 ")
 address_ttl <- c(address_ttl1, address_ttl2)
 rm(address_ttl1, address_ttl2)
@@ -98,9 +99,9 @@ address_ttl <- gsub("\"\"a\"\"", "a", address_ttl)
 #explicit persons
 free$Weduwe[free$Weduwe==""] <- NA
 free1 <- free[which(is.na(free$Weduwe)),] #geen weduwe
-  free_ttl1 <- paste0("hdsc:WR-Suriname/observation/", free1$Id, " 
+  free_ttl1 <- paste0("hdsc:WR-Suriname\\/observation\\/", free1$Id, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", free1$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", free1$'Kaart Id', " ; 
     sdo:name \"", free1$Voornaam, " ", free1$Achternaam2, "\" ; 
     sdo:familyName \"", free1$Achternaam2, "\" ; 
     sdo:givenName \"", free1$Voornaam, "\" ; 
@@ -109,19 +110,19 @@ free1 <- free[which(is.na(free$Weduwe)),] #geen weduwe
         pnv:literalName \"", free1$Voornaam, " ", free1$Achternaam2, "\" ; 
         pnv:baseSurname \"", free1$Achternaam, "\" ; 
         pnv:surnamePrefix \"", free1$Tussenvoegsel, "\" ; ] ; 
-    sdo:address hdsc:WR-Suriname/location/", free1$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", free1$'Kaart Id', "_address ; 
     sdo:gender ", free1$gender, " ; 
     sdo:hasOccupation \"", free1$Beroep, "\" ; 
     pico:hasAge \"", free1$Leeftijd, "\"^^xsd:decimal ; 
     pico:hasReligion \"", free1$Religie, "\" ; 
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P32 \"", free1$Etniciteit, "\" ;  #hasRaceOrColor
     hdsc:isEnslaverOf ", free1$imp_enslaved, " . 
 ")
 free2 <- free[which(!is.na(free$Weduwe)),] #wel weduwe, geen enslaved
-  free_ttl2 <- paste0("hdsc:WR-Suriname/observation/", free2$Id, " 
+  free_ttl2 <- paste0("hdsc:WR-Suriname\\/observation\\/", free2$Id, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", free2$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", free2$'Kaart Id', " ; 
     sdo:name \"", free2$Voornaam, " ", free2$Meisjesnaam, ", weduwe ", free2$Partnernaam, "\" ; 
     sdo:familyName \"", free2$Meisjesnaam, "\" ; 
     sdo:givenName \"", free2$Voornaam, "\" ; 
@@ -130,14 +131,14 @@ free2 <- free[which(!is.na(free$Weduwe)),] #wel weduwe, geen enslaved
         pnv:literalName \"", free2$Voornaam, " ", free2$Meisjesnaam, ", weduwe ", free2$Partnernaam, "\" ; 
         pnv:baseSurname \"", free2$Meisjesnaam, "\" ; 
         pnv:surnamePrefix \"", ifelse(grepl(" ", free2$Meisjesnaam), gsub(" .*", "", free2$Meisjesnaam), NA), "\" ; ] ; 
-    sdo:address hdsc:WR-Suriname/location/", free2$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", free2$'Kaart Id', "_address ; 
     sdo:gender ", free2$gender, " ; 
     sdo:hasOccupation \"", free2$Beroep, "\" ; 
     pico:hasAge \"", free2$Leeftijd, "\"^^xsd:decimal ; 
     pico:hasReligion \"", free2$Religie, "\" ; 
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P32 \"", free2$Etniciteit, "\" ;  #hasRaceOrColor
-    sdo:spouse hdsc:WR-Suriname/observation/", free2$Id, "p ; 
+    sdo:spouse hdsc:WR-Suriname\\/observation\\/", free2$Id, "p ; 
     hdsc:isEnslaverOf ", free2$imp_enslaved, " . 
 ")
 free_ttl <- c(free_ttl1, free_ttl2)
@@ -151,7 +152,7 @@ free_ttl <- gsub("    sdo:hasOccupation NA ;
 ", "", free_ttl)
 free_ttl <- gsub("    sdo:hasOccupation \"\" ; 
 ", "", free_ttl)
-free_ttl <- gsub("    pico:hasAge \"NA\"^^xsd:decimal ; 
+free_ttl <- gsub("    pico:hasAge \"NA\"..xsd:decimal ; 
 ", "", free_ttl)
 free_ttl <- gsub("    pico:hasAge \"\"..xsd:decimal ; 
 ", "", free_ttl)
@@ -188,9 +189,9 @@ free_ttl <- gsub("\"\"Slaven\"\"", "Slaven", free_ttl)
 
 
 #implicit spouses
-partner_ttl <- paste0("hdsc:WR-Suriname/observation/", partner$Id, "p 
+partner_ttl <- paste0("hdsc:WR-Suriname\\/observation\\/", partner$Id, "p 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", partner$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", partner$'Kaart Id', " ; 
     sdo:name \"", partner$Partnernaam, "\" ; 
     sdo:familyName \"", partner$Achternaam2, "\" ; 
     sdo:givenName \"", partner$Fn_Dec_Spouse, "\" ; 
@@ -202,7 +203,7 @@ partner_ttl <- paste0("hdsc:WR-Suriname/observation/", partner$Id, "p
     sdo:gender ", ifelse(partner$gender=="sdo:Female", "sdo:Male", 
                             ifelse(partner$gender=="sdo:Male", "sdo:Female", NA)), " ; 
     pico:deceased true ; 
-    sdo:spouse hdsc:WR-Suriname/observation/", partner$Id, " .
+    sdo:spouse hdsc:WR-Suriname\\/observation\\/", partner$Id, " .
 ")
 rm(partner)
 partner_ttl <- gsub("    sdo:gender NA ; 
@@ -225,20 +226,20 @@ exp_enslaved$Achternaam2[exp_enslaved$Achternaam2==""] <- NA
 exp_enslaved$Naam <- ifelse(is.na(exp_enslaved$Voornaam) & is.na(exp_enslaved$Achternaam2), NA,
                             ifelse(!is.na(exp_enslaved$Voornaam) & is.na(exp_enslaved$Achternaam2), exp_enslaved$Voornaam, paste(exp_enslaved$Voornaam, exp_enslaved$Achternaam2)))
 
-exp_enslaved_ttl <- paste0("hdsc:WR-Suriname/observation/", exp_enslaved$Id, " 
+exp_enslaved_ttl <- paste0("hdsc:WR-Suriname\\/observation\\/", exp_enslaved$Id, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", exp_enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", exp_enslaved$'Kaart Id', " ; 
     sdo:name \"", exp_enslaved$Naam, "\" ; 
     sdo:givenName \"", exp_enslaved$Voornaam, "\" ; 
     sdo:additionalName [
         a pnv:PersonName ; 
         pnv:literalName \"", exp_enslaved$Naam, "\" ; ] ; 
-    sdo:address hdsc:WR-Suriname/location/", exp_enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", exp_enslaved$'Kaart Id', "_address ; 
     sdo:gender ", exp_enslaved$gender, " ; 
     sdo:hasOccupation \"", exp_enslaved$Beroep, "\" ; 
     pico:hasAge \"", exp_enslaved$Leeftijd, "\"^^xsd:decimal ; 
     pico:hasReligion \"", exp_enslaved$Religie, "\" ; 
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 \"", exp_enslaved$Etniciteit, "\" .  #hasRaceOrColor
 ")
@@ -249,7 +250,7 @@ exp_enslaved_ttl <- gsub("    sdo:hasOccupation NA ;
 ", "", exp_enslaved_ttl)
 exp_enslaved_ttl <- gsub("    sdo:hasOccupation \"\" ; 
 ", "", exp_enslaved_ttl)
-exp_enslaved_ttl <- gsub("    pico:hasAge \"NA\"^^xsd:decimal ; 
+exp_enslaved_ttl <- gsub("    pico:hasAge \"NA\"..xsd:decimal ; 
 ", "", exp_enslaved_ttl)
 exp_enslaved_ttl <- gsub("    pico:hasAge \"\"..xsd:decimal ; 
 ", "", exp_enslaved_ttl)
@@ -275,16 +276,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Xma2>=x, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Male", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q425 ;  #hasAgeCategory  adult age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:kleurling", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Xma2)){break}
@@ -293,16 +294,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Xfa2>=x & x>enslaved$Xma2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Female", " ; 
-    sdo:address hdsc:WR-Suriname/source/", enslaved$'Kaart Id', "address ; 
+    sdo:address hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', "address ; 
     ed:P4 ed:Q425 ;  #hasAgeCategory  adult age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:kleurling", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Xfa2)){break}
@@ -311,16 +312,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Xmc2>=x & x>enslaved$Xfa2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Male", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q427 ;  #hasAgeCategory  child age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:kleurling", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Xmc2)){break}
@@ -329,16 +330,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Xfc2>=x & x>enslaved$Xmc2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Female", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q427 ;  #hasAgeCategory  child age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:kleurling", " ; 
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Xfc2)){break}
@@ -347,16 +348,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Bma2>=x & x>enslaved$Xfc2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Male", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q425 ;  #hasAgeCategory  adult age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:zwart", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Bma2)){break}
@@ -365,16 +366,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Bfa2>=x & x>enslaved$Bma2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Female", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q425 ;  #hasAgeCategory  adult age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:zwart", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Bfa2)){break}
@@ -383,16 +384,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Bmc2>=x & x>enslaved$Bfa2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Male", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q427 ;  #hasAgeCategory  child age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:zwart", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Bmc2)){break}
@@ -401,16 +402,16 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Bfc2>=x & x>enslaved$Bmc2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
     sdo:gender ", "sdo:Female", " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
     ed:P4 ed:Q427 ;  #hasAgeCategory  child age group
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
     ed:P32 ", "hdsc:zwart", " ;  #hasRaceOrColor
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Bfc2)){break}
@@ -419,13 +420,13 @@ x <- 0
 repeat{
   x <- x + 1
   enslaved$imp_enslaved <- ifelse(enslaved$Unk2>=x & x>enslaved$Bfc2, paste0(enslaved$imp_enslaved, 
-                                                           paste0("hdsc:WR-Suriname/observation/", enslaved$Id, "e", x, " 
+                                                           paste0("hdsc:WR-Suriname\\/observation\\/", enslaved$Id, "e", x, " 
     a pico:PersonObservation ; 
-    prov:hadPrimarySource hdsc:WR-Suriname/source/", enslaved$'Kaart Id', " ; 
-    sdo:address hdsc:WR-Suriname/location/", enslaved$'Kaart Id', "_address ; 
-    pico:hasRole ", "picot:roles/490", " ;  #bewoner
+    prov:hadPrimarySource hdsc:WR-Suriname\\/source\\/", enslaved$'Kaart Id', " ; 
+    sdo:address hdsc:WR-Suriname\\/location\\/", enslaved$'Kaart Id', "_address ; 
+    pico:hasRole ", "picot:roles\\/490", " ;  #bewoner
     ed:P33 ", "ed:Q109", " ;  #hasPersonStatus #enslaved person
-    hdsc:isEnslavedBy ", "hdsc:WR-Suriname/observation/", enslaved$Id, " . 
+    hdsc:isEnslavedBy ", "hdsc:WR-Suriname\\/observation\\/", enslaved$Id, " . 
 ")), 
                                   enslaved$imp_enslaved)
   if(x==max(enslaved$Unk2)){break}
